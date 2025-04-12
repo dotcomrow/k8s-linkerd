@@ -45,5 +45,5 @@ spec:
             - |
               kubectl label crd httproutes.gateway.networking.k8s.io app.kubernetes.io/managed-by=Helm --overwrite
               kubectl annotate crd httproutes.gateway.networking.k8s.io \
-                meta.helm.sh/release-name=linkerd \
+                meta.helm.sh/release-name=k8s-linkerd-repo-helm-chart-linkerd \
                 meta.helm.sh/release-namespace=linkerd --overwrite
