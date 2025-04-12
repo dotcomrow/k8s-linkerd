@@ -1,7 +1,7 @@
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
-  name: linkerd-crds
+  name: linkerd-crds-install
   namespace: linkerd
 spec:
   chart: linkerd-crds
