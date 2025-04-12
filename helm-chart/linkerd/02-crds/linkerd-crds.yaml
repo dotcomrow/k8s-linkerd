@@ -1,11 +1,10 @@
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
-  name: linkerd-crds-install           # Resource name (can be anything)
+  name: linkerd                       # 👈 must be EXACTLY this
   namespace: linkerd
 spec:
   chart: linkerd-crds
   repo: https://helm.linkerd.io/stable
-  repoName: linkerd                   # 👈 FIX: sets correct repo alias
   version: 1.16.11
   targetNamespace: linkerd
