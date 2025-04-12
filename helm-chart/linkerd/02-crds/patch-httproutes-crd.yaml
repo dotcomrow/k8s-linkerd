@@ -32,6 +32,7 @@ metadata:
   name: patch-httproutes-crd
   namespace: kube-system
 spec:
+  name: linkerd
   template:
     spec:
       restartPolicy: OnFailure

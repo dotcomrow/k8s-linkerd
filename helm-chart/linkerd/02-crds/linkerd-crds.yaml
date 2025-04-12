@@ -4,6 +4,7 @@ metadata:
   name: linkerd                       # 👈 must be EXACTLY this
   namespace: linkerd
 spec:
+  name: linkerd
   chart: linkerd-crds
   repo: https://helm.linkerd.io/stable
   version: 1.8.0

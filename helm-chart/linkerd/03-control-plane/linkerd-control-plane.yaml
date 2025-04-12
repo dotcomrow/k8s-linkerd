@@ -4,6 +4,7 @@ metadata:
   name: linkerd-control-plane
   namespace: linkerd
 spec:
+  name: linkerd
   chart: linkerd-control-plane
   repo: https://helm.linkerd.io/stable
   version: 1.16.11

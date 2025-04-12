@@ -4,6 +4,7 @@ metadata:
   name: linkerd-viz
   namespace: linkerd
 spec:
+  name: linkerd
   chart: linkerd-viz
   repo: https://helm.linkerd.io/stable
   targetNamespace: linkerd
