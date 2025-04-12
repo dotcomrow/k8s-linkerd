@@ -4,10 +4,10 @@ metadata:
   name: linkerd-control-plane
   namespace: linkerd
 spec:
-  chart: linkerd2
+  chart: linkerd-control-plane
   repo: https://helm.linkerd.io/stable
+  version: 1.16.11
   targetNamespace: linkerd
-  version: 2.11.5
   valuesContent: |-
     identity:
       externalCA: true
