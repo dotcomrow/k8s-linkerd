@@ -1,0 +1,21 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: linkerd-control-plane
+  namespace: linkerd
+spec:
+  chart: linkerd2
+  repo: https://helm.linkerd.io/stable
+  targetNamespace: linkerd
+  version: 2.14.1
+  valuesContent: |-
+    identity:
+      externalCA: true
+    identityTrustAnchorsPEM: |
+      {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data.ca\.crt | b64dec }}
+    issuer:
+      tls:
+        crtPEM: |
+          {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data.tls\.crt | b64dec }}
+        keyPEM: |
+          {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data.tls\.key | b64dec }}

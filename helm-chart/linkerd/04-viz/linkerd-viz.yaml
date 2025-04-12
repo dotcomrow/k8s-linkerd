@@ -1,0 +1,21 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: linkerd-viz
+  namespace: linkerd
+spec:
+  chart: linkerd-viz
+  repo: https://helm.linkerd.io/stable
+  targetNamespace: linkerd
+  version: 30.11.3
+  valuesContent: |-
+    prometheus:
+      enabled: true
+    tap:
+      enabled: true
+    metricsAPI:
+      enabled: true
+    dashboard:
+      enforcedHostRegexp: ".*"
+    grafana:
+      enabled: false  # Disable if using Rancher/Grafana Cloud instead

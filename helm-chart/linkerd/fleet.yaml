@@ -1,0 +1,6 @@
+defaultNamespace: linkerd
+dependsOn:
+  - name: 00-namespace
+  - name: 01-cert
+  - name: 02-crds
+  - name: 03-control-plane
