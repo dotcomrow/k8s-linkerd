@@ -48,3 +48,29 @@ spec:
               kubectl annotate crd httproutes.gateway.networking.k8s.io \
                 meta.helm.sh/release-name=linkerd \
                 meta.helm.sh/release-namespace=linkerd --overwrite
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: patch-linkerd-crd-ownership
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: patch
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              for crd in \
+                authorizationpolicies.policy.linkerd.io \
+                httproutes.policy.linkerd.io; do
+                echo "🔧 Patching CRD $crd"
+                kubectl annotate crd $crd \
+                  meta.helm.sh/release-name=linkerd \
+                  meta.helm.sh/release-namespace=linkerd --overwrite || true
+              done
+
