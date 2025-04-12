@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: patch-httproutes-crd
+  namespace: linkerd
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: patch
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              kubectl label crd httproutes.gateway.networking.k8s.io app.kubernetes.io/managed-by=Helm --overwrite
+              kubectl annotate crd httproutes.gateway.networking.k8s.io \
+                meta.helm.sh/release-name=linkerd \
+                meta.helm.sh/release-namespace=linkerd --overwrite
