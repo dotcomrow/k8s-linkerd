@@ -19,4 +19,5 @@ spec:
     size: 2048
   issuerRef:
     name: rancher
-    kind: ClusterIssuer
+    kind: Issuer
+    group: cert-manager.io
