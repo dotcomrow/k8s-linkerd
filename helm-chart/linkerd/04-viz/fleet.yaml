@@ -1,0 +1,3 @@
+defaultNamespace: linkerd
+dependsOn:
+  - name: 03-control-plane
