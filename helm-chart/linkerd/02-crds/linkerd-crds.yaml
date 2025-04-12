@@ -1,10 +1,11 @@
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
-  name: linkerd-crds-install
+  name: linkerd-crds-install         # Arbitrary name for the HelmChart resource
   namespace: linkerd
 spec:
   chart: linkerd-crds
   repo: https://helm.linkerd.io/stable
+  repoName: linkerd                 # ← forces the repo name to match upstream
   version: 1.16.11
   targetNamespace: linkerd
