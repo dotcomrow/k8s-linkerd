@@ -18,5 +18,5 @@ spec:
     algorithm: RSA
     size: 2048
   issuerRef:
-    name: letsencrypt-prod
+    name: rancher
     kind: ClusterIssuer
