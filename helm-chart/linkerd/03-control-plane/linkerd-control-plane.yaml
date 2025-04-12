@@ -11,11 +11,12 @@ spec:
   valuesContent: |-
     identity:
       externalCA: true
-    identityTrustAnchorsPEM: |
-      {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data.ca\.crt | b64dec }}
-    issuer:
-      tls:
-        crtPEM: |
-          {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data.tls\.crt | b64dec }}
-        keyPEM: |
-          {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data.tls\.key | b64dec }}
+      issuer:
+        scheme: kubernetes.io/tls
+        tls:
+          crtPEM: |
+            {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data."tls.crt" | b64dec }}
+          keyPEM: |
+            {{ (lookup "v1" "Secret" "linkerd" "linkerd-identity-issuer").data."tls.key" | b64dec }}
+      trustAnchorsPEM: |
+        {{ (lookup "v1" "Secret" "linkerd" "linkerd-trust-anchor").data."ca.crt" | b64dec }}

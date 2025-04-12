@@ -1,17 +1,31 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-prod
+  name: linkerd-selfsigned
 spec:
-  acme:
-    email: administrator@suncoast.systems
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-prod-key
-    solvers:
-    - http01:
-        ingress:
-          class: nginx
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: linkerd-trust-anchor
+  namespace: linkerd
+spec:
+  isCA: true
+  commonName: identity.linkerd.cluster.local
+  secretName: linkerd-trust-anchor
+  issuerRef:
+    name: linkerd-selfsigned
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: linkerd-identity-issuer
+  namespace: linkerd
+spec:
+  ca:
+    secretName: linkerd-trust-anchor
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -33,5 +47,7 @@ spec:
     algorithm: RSA
     size: 2048
   issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
+    name: linkerd-identity-issuer
+    kind: Issuer
+
+
