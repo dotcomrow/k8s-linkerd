@@ -338,7 +338,7 @@ spec:
                                           7230.
                                         properties:
                                           name:
-                                            description: "Name is the name of the\
+                                            description: "Name is the name of the \
                                               \ HTTP Header to be matched. Name matching\
                                               \ MUST be case insensitive. (See https://tools.ietf.org/html/rfc7230#section-3.2).\
                                               \ \n If multiple entries specify equivalent\
