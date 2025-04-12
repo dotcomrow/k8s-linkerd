@@ -11,7 +11,7 @@ metadata:
 rules:
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]
-    verbs: ["get", "patch"]
+    verbs: ["get", "patch", "annotate", "label"]  # optional verbs for clarity
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -29,10 +29,9 @@ roleRef:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: patch-httproutes-crd
+  name: patch-linkerd-crd-ownership
   namespace: kube-system
 spec:
-  name: linkerd
   template:
     spec:
       restartPolicy: OnFailure
@@ -44,33 +43,21 @@ spec:
             - /bin/sh
             - -c
             - |
-              kubectl label crd httproutes.gateway.networking.k8s.io app.kubernetes.io/managed-by=Helm --overwrite
+              echo "🔧 Patching Gateway API CRD"
+              kubectl label crd httproutes.gateway.networking.k8s.io app.kubernetes.io/managed-by=Helm --overwrite || true
               kubectl annotate crd httproutes.gateway.networking.k8s.io \
                 meta.helm.sh/release-name=linkerd \
-                meta.helm.sh/release-namespace=linkerd --overwrite
----
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: patch-linkerd-crd-ownership
-  namespace: kube-system
-spec:
-  template:
-    spec:
-      restartPolicy: OnFailure
-      containers:
-        - name: patch
-          image: bitnami/kubectl:latest
-          command:
-            - /bin/sh
-            - -c
-            - |
+                meta.helm.sh/release-namespace=linkerd --overwrite || true
+
+              echo "🔧 Patching Linkerd CRDs"
               for crd in \
                 authorizationpolicies.policy.linkerd.io \
-                httproutes.policy.linkerd.io; do
-                echo "🔧 Patching CRD $crd"
+                httproutes.policy.linkerd.io \
+                meshtlsauthentications.policy.linkerd.io \
+                serverauthorizations.policy.linkerd.io \
+                servers.policy.linkerd.io; do
+                echo "🔧 Patching $crd"
                 kubectl annotate crd $crd \
                   meta.helm.sh/release-name=linkerd \
                   meta.helm.sh/release-namespace=linkerd --overwrite || true
               done
-
