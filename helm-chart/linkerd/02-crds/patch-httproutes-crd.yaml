@@ -49,11 +49,15 @@ spec:
                 meta.helm.sh/release-name=linkerd \
                 meta.helm.sh/release-namespace=linkerd --overwrite || true
 
-              echo "🔧 Patching Linkerd CRDs for Helm ownership"
+              echo "🔧 Patching Linkerd CRD: meshtlsauthentications.policy.linkerd.io"
+              kubectl annotate crd meshtlsauthentications.policy.linkerd.io \
+                meta.helm.sh/release-name=linkerd \
+                meta.helm.sh/release-namespace=linkerd --overwrite || true
+
+              echo "🔧 Patching all remaining Linkerd CRDs"
               for crd in \
                 authorizationpolicies.policy.linkerd.io \
                 httproutes.policy.linkerd.io \
-                meshtlsauthentications.policy.linkerd.io \
                 serverauthorizations.policy.linkerd.io \
                 servers.policy.linkerd.io; do
                 echo "🔧 Patching $crd"
