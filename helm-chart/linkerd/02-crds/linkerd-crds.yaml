@@ -38,7 +38,7 @@ spec:
                   type: object
                   required: [kind, name]
                   # Modified from the gateway API.
-                  # Copyright 2020 The Kubernetes Authors
+                  # Copyright 2020 The Kubernetes Authors 
                   properties:
                     group:
                       description: >-
