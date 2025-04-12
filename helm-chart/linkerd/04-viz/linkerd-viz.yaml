@@ -7,7 +7,7 @@ spec:
   chart: linkerd-viz
   repo: https://helm.linkerd.io/stable
   targetNamespace: linkerd
-  version: 30.11.3
+  version: 30.12.11
   valuesContent: |-
     prometheus:
       enabled: true
