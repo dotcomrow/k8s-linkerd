@@ -43,7 +43,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              echo "🔧 Patching Gateway API CRD"
+              echo "🔧 Patching Gateway API CRD: httproutes.gateway.networking.k8s.io"
               kubectl label crd httproutes.gateway.networking.k8s.io app.kubernetes.io/managed-by=Helm --overwrite || true
               kubectl annotate crd httproutes.gateway.networking.k8s.io \
                 meta.helm.sh/release-name=linkerd \
@@ -54,7 +54,12 @@ spec:
                 meta.helm.sh/release-name=linkerd \
                 meta.helm.sh/release-namespace=linkerd --overwrite || true
 
-              echo "🔧 Patching all remaining Linkerd CRDs"
+              echo "🔧 Patching Linkerd CRD: networkauthentications.policy.linkerd.io"
+              kubectl annotate crd networkauthentications.policy.linkerd.io \
+                meta.helm.sh/release-name=linkerd \
+                meta.helm.sh/release-namespace=linkerd --overwrite || true
+
+              echo "🔧 Patching remaining Linkerd CRDs"
               for crd in \
                 authorizationpolicies.policy.linkerd.io \
                 httproutes.policy.linkerd.io \
