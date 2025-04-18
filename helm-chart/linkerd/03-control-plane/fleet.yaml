@@ -1,3 +1,4 @@
 defaultNamespace: linkerd
+name: 03-control-plane
 dependsOn:
   - name: 02-crds
